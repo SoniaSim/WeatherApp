@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://kit.fontawesome.com/a41e9403cf.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+    integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+    crossorigin=""></script>
+    <title>WeatherApp</title>
+</head>
+<body>
+
+
+    <!-- HEADER -->
+    <nav class=" header navbar navbar-light bg-dark">
+        Weather App
+       <a class="logout" href="/users/logout">Deconnexion</a>
+   </nav> 
+
+   <!-- GRID -->
+
+    <div class="container">
+
+        
+        <div class="row">
+            <div class="col-12 offset-md-6 col-lg-6">
+                <form action="/add-city" method="POST">
+                    <div class="input-group mb-3" justify-content-right>
+                        <input type="text" name="city" value="" class="form-control" placeholder="Enter City name" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-warning">Add</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+                <div class="col-12 col-lg-6">
+                    <div id="worldmap"></div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="column">
+                        <div class="row ml-3 justify-content-center mt-3">
+                            <p>Update Cities</p>
+                            <a href="/update-data"> <button type="submit" class="btn-update"><i class="fas fa-sync-alt"></i></button> </a>
+                        </div>
+
+                        <% if(cities.length==0) {%>
+                            <p class="text-center mb-3">No cities found</p>
+                            <% } else { %>
+                        <div class="card">
+                            <% for(var i = 0; i<cities.length; i++) {
+                                %>
+                            <ul class="list-group list-group-flush">
+                              <li class="list-group-item">
+                                  <div class="row justify-content-between">
+                                      <div class="cities" data-long="<%=cities[i].longitude%>" data-lat="<%=cities[i].latitude%>"><%=cities[i].name%></div>
+                                      <div><%=cities[i].description%>
+                                        <span><img src=<%=cities[i].image%>></span>
+                                        <span class="badge badge-warning"><%=cities[i].tempMin%><span>°c</span></span>
+                                        <span class="badge badge-secondary"><%=cities[i].tempMax%><span>°c</span></span>
+                                      </div>
+                                      <div><a href="/delete-city?id=<%=cities[i].id%>"><i class="far fa-times-circle" style="color: orange;"></i></a></div>
+                                  </div>
+                              </li>
+                            </ul>
+                            <%}%>
+                        </div>
+                        <%}%>
+                    </div>
+                </div>
+            
+        </div>
+    </div>
+
+          
+
+
+
+   <!-- Script -->
+    <script src="/javascripts/script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+</body>
+</html>
